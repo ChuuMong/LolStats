@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="ebeef1">#ebeef1</color>
+    <color name="black_01">#1e2022</color>
+
+    <color name="white">@android:color/white</color>
+    <color name="white_01">#ebeef1</color>
+    <color name="blue_01">#5383e8</color>
+    <color name="gray_01">#ebeef1</color>
+    <color name="white_02">#f7f7f9</color>
+    <color name="gray_02">#52595f</color>
+    <color name="gray_03">#98a0a7</color>
+
 </resources>

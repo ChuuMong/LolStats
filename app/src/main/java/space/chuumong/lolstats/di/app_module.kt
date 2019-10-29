@@ -11,10 +11,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import space.chuumong.lolstats.BuildConfig
 import space.chuumong.data.remote.api.ApiService
+import space.chuumong.data.remote.utils.NetworkErrorInterceptor
 import space.chuumong.data.remote.utils.PrettyJsonLogger
 
 private const val OKHTTP_CLIENT = "OKHTTP_CLIENT"
 const val LOGGING_INTERCEPTOR = "LOGGING_INTERCEPTOR"
+const val ERROR_INTERCEPTOR = "ERROR_INTERCEPTOR"
 
 private val apiModule = module {
     single {
@@ -29,7 +31,12 @@ private val apiModule = module {
     single(named(OKHTTP_CLIENT)) {
         OkHttpClient.Builder()
             .addInterceptor(get<HttpLoggingInterceptor>(named(LOGGING_INTERCEPTOR)))
+            .addInterceptor(get<NetworkErrorInterceptor>(named(ERROR_INTERCEPTOR)))
             .build()
+    }
+
+    single(named(ERROR_INTERCEPTOR)) {
+        NetworkErrorInterceptor()
     }
 
     single(named(LOGGING_INTERCEPTOR)) {
