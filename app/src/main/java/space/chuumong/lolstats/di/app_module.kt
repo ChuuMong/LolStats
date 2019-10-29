@@ -10,8 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import space.chuumong.lolstats.BuildConfig
-import space.chuumong.lolstats.remote.api.ApiService
-import space.chuumong.lolstats.remote.utils.PrettyJsonLogger
+import space.chuumong.data.remote.api.ApiService
+import space.chuumong.data.remote.utils.PrettyJsonLogger
 
 private const val OKHTTP_CLIENT = "OKHTTP_CLIENT"
 const val LOGGING_INTERCEPTOR = "LOGGING_INTERCEPTOR"
@@ -43,4 +43,4 @@ private val apiModule = module {
     }
 }
 
-val appModule = listOf(apiModule)
+val appModule = listOf(apiModule, useCaseModule, viewModelModule, summonerDataModule)

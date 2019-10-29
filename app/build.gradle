@@ -27,6 +27,9 @@ android {
 }
 
 dependencies {
+    implementation project(':domain')
+    implementation project(':data')
+
     implementation Dependencies.kotlinStdlib
 
     implementation Dependencies.appcompat

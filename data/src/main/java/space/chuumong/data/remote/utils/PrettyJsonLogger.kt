@@ -1,4 +1,4 @@
-package space.chuumong.lolstats.remote.utils
+package space.chuumong.data.remote.utils
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
