@@ -1,6 +1,5 @@
 package space.chuumong.lolstats.ui.main
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
@@ -12,7 +11,7 @@ import space.chuumong.lolstats.R
 import space.chuumong.lolstats.databinding.ActivityMainBinding
 import space.chuumong.lolstats.ui.BaseActivity
 import space.chuumong.lolstats.ui.adapter.SummonerLeagueAdapter
-import space.chuumong.lolstats.ui.utils.SummonerLeagueItmeSpaceDecoration
+import space.chuumong.lolstats.ui.utils.SummonerLeagueItemSpaceDecoration
 import space.chuumong.lolstats.ui.utils.setLightStatusBar
 import space.chuumong.lolstats.ui.utils.showNoTitleTwoButtonsDialog
 import space.chuumong.lolstats.viewmodel.SummonerViewModel
@@ -39,7 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.rvLeague.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvLeague.addItemDecoration(SummonerLeagueItmeSpaceDecoration())
+        binding.rvLeague.addItemDecoration(SummonerLeagueItemSpaceDecoration())
         binding.rvLeague.adapter = summonerLeagueAdapter
 
         summonerViewModel.onClickSummonerRefresh.observe(this, Observer {

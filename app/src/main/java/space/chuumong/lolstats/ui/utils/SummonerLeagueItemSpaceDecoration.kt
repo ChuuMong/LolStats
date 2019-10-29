@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Created by Home on 2019-10-29.
  */
-class SummonerLeagueItmeSpaceDecoration : RecyclerView.ItemDecoration() {
+class SummonerLeagueItemSpaceDecoration : RecyclerView.ItemDecoration() {
     companion object {
-        private const val LEFT_SPACE = 16
-        private const val RIGHT_SPACE = 16
+        private const val FIRST_ITEM_SPACE = 12
+        private const val LAST_ITEM_SPACE = 12
+        private const val ITEM_SPACE = 4
     }
 
     override fun getItemOffsets(
@@ -20,11 +21,14 @@ class SummonerLeagueItmeSpaceDecoration : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        super.getItemOffsets(outRect, view, parent, state)
+
+        outRect.right += ITEM_SPACE.toPx()
+        outRect.left += ITEM_SPACE.toPx()
+
         val position = parent.getChildAdapterPosition(view)
         when (position) {
-            0 -> outRect.left = LEFT_SPACE.toPx()
-            state.itemCount - 1 -> outRect.right = RIGHT_SPACE.toPx()
+            0 -> outRect.left += FIRST_ITEM_SPACE.toPx()
+            state.itemCount - 1 -> outRect.right += LAST_ITEM_SPACE.toPx()
         }
     }
 }

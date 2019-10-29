@@ -58,7 +58,7 @@ class SummonerLeagueAdapter :
                     item.tireRank.lp.numberFormat()
                 )
             tvWinRate.text = String.format(
-                context.getString(R.string.summoner_win_of_loss_rate),
+                context.getString(R.string.summoner_win_of_loss_rate_format),
                 item.win.numberFormat(),
                 item.loss.numberFormat(),
                 MathUtils.getWinRate(item.win, item.loss)

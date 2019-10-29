@@ -7,7 +7,7 @@ object MathUtils {
             return 0
         }
 
-        return (win.toFloat() / (win + loss).toFloat() * 100).toInt()
+        return (win / (win + loss).toFloat() * 100).toInt()
     }
 }
 
