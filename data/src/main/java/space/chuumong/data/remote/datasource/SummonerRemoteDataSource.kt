@@ -2,15 +2,12 @@ package space.chuumong.data.remote.datasource
 
 import io.reactivex.Single
 import space.chuumong.data.remote.api.ApiService
-import space.chuumong.domain.usecases.UseCase
+import space.chuumong.data.remote.model.SummonerInfoResponse
+import space.chuumong.data.remote.model.SummonerResponse
 
-
-/**
- * Created by Home on 2019-10-29.
- */
 class SummonerRemoteDataSource(private val apiService: ApiService) {
 
-    fun getSummonerInfo(name: String): Single<UseCase.None> {
+    fun getSummonerInfo(name: String): Single<SummonerResponse> {
         return apiService.getSummonerInfo(name)
     }
 
