@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+
+    implementation Dependencies.kotlinStdlib
+
+    implementation Dependencies.ktx
+
+    implementation Dependencies.retrofit
+
+    implementation Dependencies.okttp
+    implementation Dependencies.okhttpLogging
+
+    implementation Dependencies.rxjava
+    implementation Dependencies.rxAndroid
+
+    implementation Dependencies.gson
+}
