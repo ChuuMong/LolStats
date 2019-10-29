@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "space.chuumong.lolstats"
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation Dependencies.kotlinStdlib
+
+    implementation Dependencies.appcompat
+    implementation Dependencies.ktx
+
+    implementation Dependencies.constraintLayout
+    implementation Dependencies.recyclerView
+
+    implementation Dependencies.koin
+    implementation Dependencies.koinViewModel
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGsonConvert
+    implementation Dependencies.retrofitRxJava2Adapter
+
+    implementation Dependencies.okttp
+    implementation Dependencies.okhttpLogging
+
+    implementation Dependencies.rxjava
+
+    implementation Dependencies.glide
+    kapt Dependencies.glideComplier
+}
