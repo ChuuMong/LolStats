@@ -17,5 +17,6 @@
 
     <string name="summoner_position">포지션</string>
     <string name="summoner_most_champion">모스트 승률</string>
+    <string name="summoner_kill_rate">킬관여 %s</string>
 
 </resources>

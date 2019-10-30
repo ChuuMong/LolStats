@@ -40,6 +40,8 @@ data class SummonerMatchGameResponse(
         var leastChampion = ""
         var leastWinRate = Int.MAX_VALUE
         this.mostChampions.forEach {
+
+            //TODO 중복 여부 정상 처리 안됨.
             var isAdd = true
             if (mostChampions.find { champion -> champion.name == it.name } != null) {
                 isAdd = false
@@ -99,13 +101,26 @@ data class SummonerGameResponse(
         val spells = mutableListOf<ImageUrl>()
         val items = mutableListOf<ImageUrl>()
 
-        this.spells.forEach { it.toEntity() }
-        this.items.forEach { it.toEntity() }
+        this.spells.forEach { spells.add(it.toEntity()) }
+
+        var isHasWard = false
+        var wardImageUrl = ""
+        this.items.forEach {
+            if (it.imageUrl.contains("3340")) {
+                isHasWard = true
+                wardImageUrl = it.imageUrl
+                return@forEach
+            }
+
+            items.add(it.toEntity())
+        }
 
         return SummonerGame(
             champion.toEntity(),
             spells,
             items,
+            isHasWard,
+            wardImageUrl,
             createDate,
             gameLength,
             gameType,

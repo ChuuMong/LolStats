@@ -106,6 +106,7 @@ class SummonerViewModel(private val getSummonerInfo: GetSummonerInfo) : BaseView
             if (it.matchGame.mostChampions.size < 2) {
                 _isLoading.value = false
                 result.onFail(ArrayIndexOutOfBoundsException())
+                return@subscribe
             }
 
             val firstMostChampion = it.matchGame.mostChampions[0]

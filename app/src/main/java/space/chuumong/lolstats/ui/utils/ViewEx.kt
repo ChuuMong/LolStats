@@ -48,46 +48,41 @@ fun ImageView.loadUrl(url: String) {
     Glide.with(context).load(url).into(this)
 }
 
-fun TextView.setKillDeathAssistAverage(
-    killAverage: Float, deathAverage: Float, assistAverage: Float
-) {
-    val killAverageText = String.format("%.1f", killAverage)
-    val deathAverageText = String.format("%.1f", deathAverage)
-    val assistAverageText = String.format("%.1f", assistAverage)
+fun TextView.setKillDeathAssistAverage(kill: String, death: String, assist: String) {
     val spaceSlash = " / "
-    
-    val deathAverageTextStartIndex = killAverageText.length + spaceSlash.length
+
+    val deathAverageTextStartIndex = kill.length + spaceSlash.length
     val assistAverageTextStartIndex =
-        deathAverageTextStartIndex + deathAverageText.length + spaceSlash.length
+        deathAverageTextStartIndex + death.length + spaceSlash.length
 
     val averageText =
-        killAverageText + spaceSlash + deathAverageText + spaceSlash + assistAverageText
+        kill + spaceSlash + death + spaceSlash + assist
     val spannableBuilder = SpannableStringBuilder(averageText)
     spannableBuilder.setSpan(
         StyleSpan(Typeface.BOLD),
         0,
-        killAverageText.length,
+        kill.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 
     spannableBuilder.setSpan(
         StyleSpan(Typeface.BOLD),
         deathAverageTextStartIndex,
-        deathAverageTextStartIndex + deathAverageText.length,
+        deathAverageTextStartIndex + death.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 
     spannableBuilder.setSpan(
         ForegroundColorSpan(ContextCompat.getColor(context, R.color.red_01)),
         deathAverageTextStartIndex,
-        deathAverageTextStartIndex + deathAverageText.length,
+        deathAverageTextStartIndex + death.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 
     spannableBuilder.setSpan(
         StyleSpan(Typeface.BOLD),
         assistAverageTextStartIndex,
-        assistAverageTextStartIndex + assistAverageText.length,
+        assistAverageTextStartIndex + assist.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 

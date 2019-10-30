@@ -11,6 +11,7 @@ import space.chuumong.domain.entities.SummonerProfile
 import space.chuumong.lolstats.R
 import space.chuumong.lolstats.databinding.ActivityMainBinding
 import space.chuumong.lolstats.ui.BaseActivity
+import space.chuumong.lolstats.ui.adapter.SummonerGameAdapter
 import space.chuumong.lolstats.ui.adapter.SummonerLeagueAdapter
 import space.chuumong.lolstats.ui.utils.SummonerLeagueItemSpaceDecoration
 import space.chuumong.lolstats.ui.utils.setLightStatusBar
@@ -27,6 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val summonerViewModel: SummonerViewModel by lazy { getViewModel() as SummonerViewModel }
 
     private val summonerLeagueAdapter by lazy { SummonerLeagueAdapter() }
+    private val summonerGameAdapter by lazy { SummonerGameAdapter() }
 
     override fun getLayoutId() = R.layout.activity_main
 
@@ -42,6 +44,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.rvLeague.addItemDecoration(SummonerLeagueItemSpaceDecoration())
         binding.rvLeague.adapter = summonerLeagueAdapter
 
+        binding.rvGame.layoutManager = LinearLayoutManager(this)
+        binding.rvGame.adapter = summonerGameAdapter
+
         summonerViewModel.onClickSummonerRefresh.observe(this, Observer {
             getSummonerInfo(SUMMONER_NAME)
         })
@@ -54,6 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         summonerViewModel.getSummonerInfo(name, object : Result<Summoner> {
             override fun onSuccess(result: Summoner) {
                 summonerLeagueAdapter.addAll(result.profile.leagues)
+                summonerGameAdapter.addAll(result.matchGame.games)
             }
 
             override fun onFail(t: Throwable) {

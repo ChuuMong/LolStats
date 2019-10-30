@@ -16,6 +16,8 @@ data class SummonerGame(
     val champion: SummonerGameChampion,
     val spells: List<ImageUrl>,
     val items: List<ImageUrl>,
+    val isHasWard: Boolean,
+    val wardImageUrl: String,
     val createDate: Int,
     val gameLength: Int,
     val gameType: String,

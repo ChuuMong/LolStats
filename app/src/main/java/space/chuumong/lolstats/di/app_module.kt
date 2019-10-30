@@ -40,7 +40,7 @@ private val apiModule = module {
     }
 
     single(named(LOGGING_INTERCEPTOR)) {
-        HttpLoggingInterceptor(PrettyJsonLogger()).apply {
+        HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }

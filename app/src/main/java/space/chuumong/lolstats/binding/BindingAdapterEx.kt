@@ -53,7 +53,11 @@ fun setKillDeathAssistAverageText(
     deathAverage ?: return
     assistAverage ?: return
 
-    tv.setKillDeathAssistAverage(killAverage, deathAverage, assistAverage)
+    val killAverageText = String.format("%.1f", killAverage)
+    val deathAverageText = String.format("%.1f", deathAverage)
+    val assistAverageText = String.format("%.1f", assistAverage)
+    
+    tv.setKillDeathAssistAverage(killAverageText, deathAverageText, assistAverageText)
 }
 
 @BindingAdapter("kdaText")
