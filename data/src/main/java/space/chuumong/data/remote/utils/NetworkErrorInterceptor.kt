@@ -21,7 +21,7 @@ class NetworkErrorInterceptor : Interceptor {
         /**
          * 재시도 딜레이 타임
          */
-        private const val RETRY_DELAY_TIME = 10 * 1000L
+        private const val RETRY_DELAY_TIME = 3 * 1000L
     }
 
     @Throws(Exception::class)

@@ -6,7 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.getViewModel
 import space.chuumong.data.Result
-import space.chuumong.domain.entities.SummonerInfo
+import space.chuumong.domain.entities.Summoner
+import space.chuumong.domain.entities.SummonerProfile
 import space.chuumong.lolstats.R
 import space.chuumong.lolstats.databinding.ActivityMainBinding
 import space.chuumong.lolstats.ui.BaseActivity
@@ -50,9 +51,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     @Suppress("SameParameterValue")
     private fun getSummonerInfo(name: String) {
-        summonerViewModel.getSummonerInfo(name, object : Result<SummonerInfo> {
-            override fun onSuccess(result: SummonerInfo) {
-                summonerLeagueAdapter.addAll(result.leagues)
+        summonerViewModel.getSummonerInfo(name, object : Result<Summoner> {
+            override fun onSuccess(result: Summoner) {
+                summonerLeagueAdapter.addAll(result.profile.leagues)
             }
 
             override fun onFail(t: Throwable) {

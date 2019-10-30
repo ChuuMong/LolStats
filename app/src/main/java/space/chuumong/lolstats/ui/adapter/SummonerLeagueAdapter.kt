@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import space.chuumong.domain.entities.SummonerLeague
 import space.chuumong.lolstats.R
 import space.chuumong.lolstats.ui.utils.loadUrl
-import space.chuumong.lolstats.utils.MathUtils
+import space.chuumong.data.utils.MathUtils
 import space.chuumong.lolstats.utils.numberFormat
-import java.text.NumberFormat
 
 class SummonerLeagueAdapter :
     RecyclerView.Adapter<SummonerLeagueAdapter.SummonerLeagueViewHolder>() {

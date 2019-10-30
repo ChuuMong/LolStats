@@ -1,18 +1,18 @@
 package space.chuumong.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import space.chuumong.domain.entities.SummonerInfo
+import space.chuumong.domain.entities.SummonerProfile
 import space.chuumong.domain.entities.SummonerLeague
 import space.chuumong.domain.entities.SummonerTireRank
 
-data class SummonerResponse(
+data class SummonerInfoResponse(
     @SerializedName("summoner")
-    val summonerInfo: SummonerInfoResponse
+    val summonerProfile: SummonerProfileResponse
 ) {
-    fun toEntity() = summonerInfo.toEntity()
+    fun toEntity() = summonerProfile.toEntity()
 }
 
-data class SummonerInfoResponse(
+data class SummonerProfileResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("level")
@@ -22,11 +22,11 @@ data class SummonerInfoResponse(
     @SerializedName("leagues")
     val leagues: List<SummonerLeagueResponse>
 ) {
-    fun toEntity(): SummonerInfo {
+    fun toEntity(): SummonerProfile {
         val leagues = mutableListOf<SummonerLeague>()
         this.leagues.forEach { leagues.add(it.toEntity()) }
 
-        return SummonerInfo(name, level, profileImageUrl, leagues)
+        return SummonerProfile(name, level, profileImageUrl, leagues)
     }
 }
 

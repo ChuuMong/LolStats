@@ -108,6 +108,218 @@
                     app:layout_constraintTop_toBottomOf="@id/cl_summoner_profile"
                     tools:listitem="@layout/item_league" />
 
+                <View
+                    android:id="@+id/line_01"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/gray_01"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_league" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_resent_game"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line_01">
+
+                    <TextView
+                        android:id="@+id/tv_recent_analysis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="11dp"
+                        android:textColor="@color/gray_03"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:recentGameCount="@{summonerViewModel.resentGameCount}"
+                        tools:text="최근 20게임 분석" />
+
+                    <TextView
+                        android:id="@+id/tv_wins_and_losses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/gray_03"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_recent_analysis"
+                        app:resentLossCount="@{summonerViewModel.resentLossCount}"
+                        app:resentWinCount="@{summonerViewModel.resentWinCount}"
+                        tools:text="12승 8패" />
+
+                    <TextView
+                        android:id="@+id/tv_kills_deaths_assists"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/black_02"
+                        app:assistAverage="@{summonerViewModel.resentAssistAverage}"
+                        app:deathAverage="@{summonerViewModel.resentDeathAverage}"
+                        app:killAverage="@{summonerViewModel.resentKillAverage}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_wins_and_losses"
+                        tools:text="5.9 / 12.4 / 1.2" />
+
+                    <TextView
+                        android:id="@+id/tv_kda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/blue_02"
+                        android:textSize="10sp"
+                        app:kdaText="@{summonerViewModel.resentKda}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_kills_deaths_assists"
+                        tools:text="3.52:1" />
+
+                    <TextView
+                        android:id="@+id/tv_win_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/red_01"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toEndOf="@id/tv_kda"
+                        app:layout_constraintTop_toBottomOf="@id/tv_kills_deaths_assists"
+                        app:resentWinRateText="@{summonerViewModel.resentWinRateText}"
+                        tools:text="(66%)" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_position"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_label_position"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/summoner_position"
+                            android:textColor="@color/gray_03"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_position"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginTop="9dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_label_position"
+                            app:summonerPositionImage="@{summonerViewModel.summonerPosition}"
+                            tools:src="@drawable/icon_lol_bot" />
+
+                        <TextView
+                            android:id="@+id/tv_position_win_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/black_01"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_position"
+                            app:winRateText="@{summonerViewModel.summonerPositionWinRate}"
+                            tools:text="42%" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        app:layout_constraintEnd_toStartOf="@id/cl_position"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_label_most_champion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/summoner_most_champion"
+                            android:textColor="@color/gray_03"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_most_first_champion"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_marginTop="7dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_label_most_champion"
+                            app:loadCircleImage="@{summonerViewModel.mostFirstChampionImage}"
+                            tools:src="@drawable/ic_launcher_background" />
+
+                        <TextView
+                            android:id="@+id/tv_most_first_win_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@{summonerViewModel.isMostFirstChampion ? @color/red_01 : @color/black_01}"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_most_first_champion"
+                            app:layout_constraintStart_toStartOf="@id/iv_most_first_champion"
+                            app:layout_constraintTop_toBottomOf="@id/iv_most_first_champion"
+                            app:winRateText="@{summonerViewModel.mostFirstChampionWinRate}"
+                            tools:text="45%" />
+
+                        <ImageView
+                            android:id="@+id/iv_most_second_champion"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="17dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_label_most_champion"
+                            app:loadCircleImage="@{summonerViewModel.mostSecondChampionImage}"
+                            tools:src="@drawable/ic_launcher_background" />
+
+                        <TextView
+                            android:id="@+id/tv_most_second_win_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@{summonerViewModel.isMostSecondChampion ? @color/red_01 : @color/black_01}"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_most_second_champion"
+                            app:layout_constraintStart_toStartOf="@id/iv_most_second_champion"
+                            app:layout_constraintTop_toBottomOf="@id/iv_most_second_champion"
+                            app:winRateText="@{summonerViewModel.mostSecondChampionWinRate}"
+                            tools:text="45%" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/line_02"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:background="@color/gray_01"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_resent_game" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
