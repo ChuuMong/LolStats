@@ -1,9 +1,5 @@
 package space.chuumong.domain.entities
 
-data class SummonerInfo(
-    val summonerProfile: SummonerProfile
-)
-
 data class SummonerProfile(
     val name: String,
     val level: Int,

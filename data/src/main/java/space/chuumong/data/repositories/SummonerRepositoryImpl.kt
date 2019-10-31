@@ -2,10 +2,8 @@ package space.chuumong.data.repositories
 
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import space.chuumong.data.mapper.SummonerMapper
 import space.chuumong.data.remote.datasource.SummonerRemoteDataSource
-import space.chuumong.domain.entities.Summoner
 import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.domain.entities.SummonerMatchGame
 import space.chuumong.domain.entities.SummonerProfile
@@ -16,13 +14,17 @@ class SummonerRepositoryImpl(
     private val mapper: SummonerMapper
 ) : SummonerRepository {
 
-    override fun getSummonerInfo(name: String): Single<Summoner> {
-        return getSummonerProfile(name)
-            .zipWith(getSummonerMatchGame(name),
-                BiFunction<SummonerProfile, SummonerMatchGame, Summoner> { profile, matchGame ->
-                    Summoner(profile, matchGame)
-                })
+    override fun getSummonerProfile(name: String): Single<SummonerProfile> {
+        return remoteDataSource.getSummonerProfile(name)
+            .map(mapper.toSummonerProfileEntity())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getSummonerMatchGame(name: String): Single<SummonerMatchGame> {
+        return remoteDataSource.getSummonerMatchGame(name)
+            .map(mapper.toSummonerMatchGameEntity())
+            .observeOn(AndroidSchedulers.mainThread())
+
     }
 
     override fun getSummonerMoreMatchGame(name: String, date: Int): Single<List<SummonerGame>> {
@@ -32,16 +34,5 @@ class SummonerRepositoryImpl(
                 it.games
             }
             .observeOn(AndroidSchedulers.mainThread())
-    }
-
-    private fun getSummonerProfile(name: String): Single<SummonerProfile> {
-        return remoteDataSource.getSummonerProfile(name)
-            .map(mapper.toSummonerProfileEntity())
-    }
-
-    private fun getSummonerMatchGame(name: String): Single<SummonerMatchGame> {
-        return remoteDataSource.getSummonerMatchGame(name)
-            .map(mapper.toSummonerMatchGameEntity())
-
     }
 }

@@ -8,8 +8,12 @@
         <import type="android.view.View" />
 
         <variable
-            name="summonerViewModel"
-            type="space.chuumong.lolstats.viewmodel.SummonerViewModel" />
+            name="summonerProfileViewModel"
+            type="space.chuumong.lolstats.viewmodel.SummonerProfileViewModel" />
+
+        <variable
+            name="summonerGameViewModel"
+            type="space.chuumong.lolstats.viewmodel.SummonerGameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +26,7 @@
             android:id="@+id/scroll_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{summonerViewModel.isLoading ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{summonerProfileViewModel.isLoading ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +52,7 @@
                         android:layout_marginStart="16dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:loadCircleImage="@{summonerViewModel.summonerProfileImage}"
+                        app:loadCircleImage="@{summonerProfileViewModel.summonerProfileImage}"
                         tools:src="@drawable/ic_launcher_background" />
 
                     <TextView
@@ -60,7 +64,7 @@
                         android:minWidth="33dp"
                         android:paddingStart="6dp"
                         android:paddingEnd="6dp"
-                        android:text="@{summonerViewModel.summonerLevel}"
+                        android:text="@{summonerProfileViewModel.summonerLevel}"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@id/iv_summoner_profile"
@@ -74,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@{summonerViewModel.summonerName}"
+                        android:text="@{summonerProfileViewModel.summonerName}"
                         android:textColor="@color/black_01"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -90,7 +94,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/shape_solid_blue_01_corner_20"
-                        android:onClick="@{() -> summonerViewModel.onClickSummonerRefresh()}"
+                        android:onClick="@{() -> summonerProfileViewModel.onClickSummonerRefresh()}"
                         android:stateListAnimator="@null"
                         android:text="@string/summoner_refresh"
                         android:textColor="@color/white"
@@ -138,7 +142,7 @@
                         android:textSize="10sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:recentGameCount="@{summonerViewModel.resentGameCount}"
+                        app:recentGameCount="@{summonerGameViewModel.resentGameCount}"
                         tools:text="최근 20게임 분석" />
 
                     <TextView
@@ -151,8 +155,8 @@
                         android:textSize="10sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_recent_analysis"
-                        app:resentLossCount="@{summonerViewModel.resentLossCount}"
-                        app:resentWinCount="@{summonerViewModel.resentWinCount}"
+                        app:resentLossCount="@{summonerGameViewModel.resentLossCount}"
+                        app:resentWinCount="@{summonerGameViewModel.resentWinCount}"
                         tools:text="12승 8패" />
 
                     <TextView
@@ -162,9 +166,9 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="1dp"
                         android:textColor="@color/black_02"
-                        app:assistAverage="@{summonerViewModel.resentAssistAverage}"
-                        app:deathAverage="@{summonerViewModel.resentDeathAverage}"
-                        app:killAverage="@{summonerViewModel.resentKillAverage}"
+                        app:assistAverage="@{summonerGameViewModel.resentAssistAverage}"
+                        app:deathAverage="@{summonerGameViewModel.resentDeathAverage}"
+                        app:killAverage="@{summonerGameViewModel.resentKillAverage}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_wins_and_losses"
                         tools:text="5.9 / 12.4 / 1.2" />
@@ -177,7 +181,7 @@
                         android:layout_marginTop="1dp"
                         android:textColor="@color/blue_02"
                         android:textSize="10sp"
-                        app:kdaText="@{summonerViewModel.resentKda}"
+                        app:kdaText="@{summonerGameViewModel.resentKda}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_kills_deaths_assists"
                         tools:text="3.52:1" />
@@ -192,7 +196,7 @@
                         android:textSize="10sp"
                         app:layout_constraintStart_toEndOf="@id/tv_kda"
                         app:layout_constraintTop_toBottomOf="@id/tv_kills_deaths_assists"
-                        app:resentWinRateText="@{summonerViewModel.resentWinRateText}"
+                        app:resentWinRateText="@{summonerGameViewModel.resentWinRateText}"
                         tools:text="(66%)" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -224,7 +228,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_label_position"
-                            app:summonerPositionImage="@{summonerViewModel.summonerPosition}"
+                            app:summonerPositionImage="@{summonerGameViewModel.summonerPosition}"
                             tools:src="@drawable/icon_lol_bot" />
 
                         <TextView
@@ -237,7 +241,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/iv_position"
-                            app:winRateText="@{summonerViewModel.summonerPositionWinRate}"
+                            app:winRateText="@{summonerGameViewModel.summonerPositionWinRate}"
                             tools:text="42%" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -269,7 +273,7 @@
                             android:layout_marginTop="7dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_label_most_champion"
-                            app:loadCircleImage="@{summonerViewModel.mostFirstChampionImage}"
+                            app:loadCircleImage="@{summonerGameViewModel.mostFirstChampionImage}"
                             tools:src="@drawable/ic_launcher_background" />
 
                         <TextView
@@ -277,12 +281,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@{summonerViewModel.isMostFirstChampion ? @color/red_01 : @color/black_01}"
+                            android:textColor="@{summonerGameViewModel.isMostFirstChampion ? @color/red_01 : @color/black_01}"
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="@id/iv_most_first_champion"
                             app:layout_constraintStart_toStartOf="@id/iv_most_first_champion"
                             app:layout_constraintTop_toBottomOf="@id/iv_most_first_champion"
-                            app:winRateText="@{summonerViewModel.mostFirstChampionWinRate}"
+                            app:winRateText="@{summonerGameViewModel.mostFirstChampionWinRate}"
                             tools:text="45%" />
 
                         <ImageView
@@ -293,7 +297,7 @@
                             android:layout_marginEnd="17dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_label_most_champion"
-                            app:loadCircleImage="@{summonerViewModel.mostSecondChampionImage}"
+                            app:loadCircleImage="@{summonerGameViewModel.mostSecondChampionImage}"
                             tools:src="@drawable/ic_launcher_background" />
 
                         <TextView
@@ -301,12 +305,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@{summonerViewModel.isMostSecondChampion ? @color/red_01 : @color/black_01}"
+                            android:textColor="@{summonerGameViewModel.isMostSecondChampion ? @color/red_01 : @color/black_01}"
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="@id/iv_most_second_champion"
                             app:layout_constraintStart_toStartOf="@id/iv_most_second_champion"
                             app:layout_constraintTop_toBottomOf="@id/iv_most_second_champion"
-                            app:winRateText="@{summonerViewModel.mostSecondChampionWinRate}"
+                            app:winRateText="@{summonerGameViewModel.mostSecondChampionWinRate}"
                             tools:text="45%" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -338,7 +342,7 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{summonerViewModel.isLoading ? View.VISIBLE: View.GONE}"
+            android:visibility="@{summonerProfileViewModel.isLoading ? View.VISIBLE: View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

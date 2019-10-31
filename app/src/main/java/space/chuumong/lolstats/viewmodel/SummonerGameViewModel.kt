@@ -1,27 +1,19 @@
 package space.chuumong.lolstats.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import space.chuumong.data.Result
 import space.chuumong.data.utils.MathUtils
-import space.chuumong.domain.entities.Summoner
 import space.chuumong.domain.entities.SummonerGame
-import space.chuumong.domain.entities.SummonerProfile
-import space.chuumong.domain.usecases.GetSummonerInfo
+import space.chuumong.domain.entities.SummonerMatchGame
+import space.chuumong.domain.usecases.GetSummonerMatchGame
 import space.chuumong.domain.usecases.GetSummonerMoreMatchGame
-import space.chuumong.lolstats.utils.SingleLiveEvent
 
-class SummonerViewModel(
-    private val getSummonerInfo: GetSummonerInfo,
-    private val getMoreMatchGame: GetSummonerMoreMatchGame
+class SummonerGameViewModel(
+    private val getSummonerMatchGame: GetSummonerMatchGame,
+    private val getSummonerMoreMatchGame: GetSummonerMoreMatchGame
 ) : BaseViewModel() {
 
-    private val _isLoading = MutableLiveData<Boolean>()
-
-    private val _summonerName = MutableLiveData<String>()
-    private val _summonerLevel = MutableLiveData<String>()
-    private val _summonerProfileImage = MutableLiveData<String>()
     private val _resentGameCount = MutableLiveData<Int>()
     private val _resentWinCount = MutableLiveData<Int>()
     private val _resentLossCount = MutableLiveData<Int>()
@@ -39,14 +31,6 @@ class SummonerViewModel(
     private val _mostSecondChampionWinRate = MutableLiveData<Int>()
     private val _isMostFirstChampion = MutableLiveData<Boolean>()
     private val _isMostSecondChampion = MutableLiveData<Boolean>()
-
-    private val _onClickSummonerRefresh = SingleLiveEvent<Any>()
-
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    val summonerName: LiveData<String> get() = _summonerName
-    val summonerLevel: LiveData<String> get() = _summonerLevel
-    val summonerProfileImage: LiveData<String> get() = _summonerProfileImage
 
     val resentGameCount: LiveData<Int> get() = _resentGameCount
     val resentWinCount: LiveData<Int> get() = _resentWinCount
@@ -67,33 +51,19 @@ class SummonerViewModel(
     val summonerPosition: LiveData<String> get() = _summonerPosition
     val summonerPositionWinRate: LiveData<Int> get() = _summonerPositionWinRate
 
-    val onClickSummonerRefresh: LiveData<Any>
-        get() = _onClickSummonerRefresh
-
-    fun onClickSummonerRefresh() {
-        _onClickSummonerRefresh.call()
-    }
-
-    @SuppressLint("DefaultLocale")
-    fun getSummonerInfo(name: String, result: Result<Summoner>) {
-        _isLoading.value = true
-
-        add(getSummonerInfo.get(name).subscribe({
-            _summonerName.value = it.profile.name.capitalize()
-            _summonerLevel.value = it.profile.level.toString()
-            _summonerProfileImage.value = it.profile.profileImageUrl
-
-            val resentGameCount = it.matchGame.games.size
+    fun getMatchGame(name: String, result: Result<SummonerMatchGame>) {
+        add(getSummonerMatchGame.get(name).subscribe({
+            val resentGameCount = it.games.size
             _resentGameCount.value = resentGameCount
 
-            val winCount = it.matchGame.resentWinCount
-            val lossCount = it.matchGame.resentLossCount
+            val winCount = it.resentWinCount
+            val lossCount = it.resentLossCount
             _resentWinCount.value = winCount
             _resentLossCount.value = lossCount
 
-            val totalKills = it.matchGame.totalDeaths.toFloat()
-            val totalDeaths = it.matchGame.totalDeaths.toFloat()
-            val totalAssists = it.matchGame.totalAssists.toFloat()
+            val totalKills = it.totalDeaths.toFloat()
+            val totalDeaths = it.totalDeaths.toFloat()
+            val totalAssists = it.totalAssists.toFloat()
 
             _resentKillAverage.value = totalKills / resentGameCount
             _resentDeathAverage.value = totalDeaths / resentGameCount
@@ -103,12 +73,12 @@ class SummonerViewModel(
 
             _resentWinRateText.value = MathUtils.getWinRate(winCount, lossCount)
 
-            val summonerPosition = it.matchGame.positions[0]
+            val summonerPosition = it.positions[0]
             _summonerPosition.value = summonerPosition.position
             _summonerPositionWinRate.value =
                 MathUtils.getWinRate(summonerPosition.wins, summonerPosition.losses)
 
-            val firstMostChampion = it.matchGame.mostChampions[0]
+            val firstMostChampion = it.mostChampions[0]
             val firstMostChampionWinRate =
                 MathUtils.getWinRate(firstMostChampion.wins, firstMostChampion.losses)
 
@@ -116,7 +86,7 @@ class SummonerViewModel(
             _mostFirstChampionWinRate.value = firstMostChampionWinRate
 
             val secondMostChampion = try {
-                it.matchGame.mostChampions[1]
+                it.mostChampions[1]
             } catch (e: ArrayIndexOutOfBoundsException) {
                 null
             }
@@ -149,16 +119,14 @@ class SummonerViewModel(
                 _isMostFirstChampion.value = true
             }
 
-            _isLoading.value = false
             result.onSuccess(it)
         }, {
-            _isLoading.value = false
             result.onFail(it)
         }))
     }
 
     fun getMoreMatchGame(name: String, date: Int, result: Result<List<SummonerGame>>) {
-        add(getMoreMatchGame.get(name, date).subscribe({
+        add(getSummonerMoreMatchGame.get(name, date).subscribe({
             result.onSuccess(it)
         }, {
             result.onFail(it)

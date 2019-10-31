@@ -1,28 +1,26 @@
 package space.chuumong.domain.usecases
 
 import io.reactivex.Single
-import space.chuumong.domain.entities.Summoner
-import space.chuumong.domain.entities.SummonerProfile
+import space.chuumong.domain.entities.SummonerMatchGame
 import space.chuumong.domain.repositories.SummonerRepository
 
-class GetSummonerInfo(private val repository: SummonerRepository) :
-    UseCase<Map<String, String>, Summoner>() {
+class GetSummonerMatchGame(private val repository: SummonerRepository) :
+    UseCase<Map<String, String>, SummonerMatchGame>() {
 
     companion object {
         private val NAME = "params:name"
     }
 
-    override fun run(params: Map<String, String>): Single<Summoner> {
+    override fun run(params: Map<String, String>): Single<SummonerMatchGame> {
         val name = params[NAME] ?: throw NullPointerException()
 
-        return repository.getSummonerInfo(name)
+        return repository.getSummonerMatchGame(name)
     }
 
-    fun get(name: String): Single<Summoner> {
+    fun get(name: String): Single<SummonerMatchGame> {
         val params = hashMapOf<String, String>()
         params[NAME] = name
 
         return execute(params)
     }
-
 }

@@ -4,10 +4,6 @@ import io.reactivex.Single
 import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.domain.repositories.SummonerRepository
 
-
-/**
- * Created by Home on 2019-10-31.
- */
 class GetSummonerMoreMatchGame(private val repository: SummonerRepository) :
     UseCase<Map<String, Any>, List<SummonerGame>>() {
     companion object {
