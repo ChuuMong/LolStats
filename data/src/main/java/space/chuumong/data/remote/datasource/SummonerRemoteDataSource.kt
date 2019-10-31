@@ -4,6 +4,7 @@ import io.reactivex.Single
 import space.chuumong.data.remote.api.ApiService
 import space.chuumong.data.remote.model.SummonerInfoResponse
 import space.chuumong.data.remote.model.SummonerMatchGameResponse
+import space.chuumong.domain.entities.SummonerGame
 
 class SummonerRemoteDataSource(private val apiService: ApiService) {
 
@@ -11,7 +12,7 @@ class SummonerRemoteDataSource(private val apiService: ApiService) {
         return apiService.getSummonerProfile(name)
     }
 
-    fun getSummonerMatchGame(name : String) : Single<SummonerMatchGameResponse> {
-        return apiService.getSummonerMatchGame(name)
+    fun getSummonerMatchGame(name: String, lastMatch: Int? = null): Single<SummonerMatchGameResponse> {
+        return apiService.getSummonerMatchGame(name, lastMatch)
     }
 }

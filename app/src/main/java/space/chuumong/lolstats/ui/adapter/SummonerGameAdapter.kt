@@ -19,27 +19,64 @@ import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.lolstats.R
 import space.chuumong.lolstats.ui.utils.*
 
-class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGameViewHolder>() {
+class SummonerGameAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val PROGRESS_SIZE = 1
+
+        private const val VIEW_TYPE_PROGRESS = 0
+        private const val VIEW_TYPE_ITEM = 1
+    }
 
     private val games = mutableListOf<SummonerGame>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SummonerGameViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_game, parent, false)
-        return SummonerGameViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_PROGRESS -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_progress, parent, false)
+                ProgressViewHolder(view)
+            }
+            else -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_game, parent, false)
+                SummonerGameViewHolder(view)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return games.size
+        if (games.isEmpty()) {
+            return 0
+        }
+
+        return games.size + PROGRESS_SIZE
     }
 
-    override fun onBindViewHolder(holder: SummonerGameViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            games.size -> VIEW_TYPE_PROGRESS
+            else -> VIEW_TYPE_ITEM
+        }
     }
 
-    private fun getItem(position: Int) = games[position]
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is SummonerGameViewHolder) {
+            holder.bind(getItem(position))
+        }
+    }
+
+    private fun getItem(position: Int): SummonerGame {
+        return games[position]
+    }
 
     fun addAll(items: List<SummonerGame>) {
         games.clear()
+        games.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addMore(items: List<SummonerGame>) {
         games.addAll(items)
         notifyDataSetChanged()
     }
@@ -162,4 +199,6 @@ class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGam
             }
         }
     }
+
+    inner class ProgressViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

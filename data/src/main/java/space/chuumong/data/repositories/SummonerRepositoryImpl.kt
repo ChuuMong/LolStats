@@ -6,6 +6,7 @@ import io.reactivex.functions.BiFunction
 import space.chuumong.data.mapper.SummonerMapper
 import space.chuumong.data.remote.datasource.SummonerRemoteDataSource
 import space.chuumong.domain.entities.Summoner
+import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.domain.entities.SummonerMatchGame
 import space.chuumong.domain.entities.SummonerProfile
 import space.chuumong.domain.repositories.SummonerRepository
@@ -21,6 +22,15 @@ class SummonerRepositoryImpl(
                 BiFunction<SummonerProfile, SummonerMatchGame, Summoner> { profile, matchGame ->
                     Summoner(profile, matchGame)
                 })
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getSummonerMoreMatchGame(name: String, date: Int): Single<List<SummonerGame>> {
+        return remoteDataSource.getSummonerMatchGame(name, date)
+            .map(mapper.toSummonerMatchGameEntity())
+            .map {
+                it.games
+            }
             .observeOn(AndroidSchedulers.mainThread())
     }
 

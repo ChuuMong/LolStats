@@ -4,5 +4,5 @@ import org.koin.dsl.module
 import space.chuumong.lolstats.viewmodel.SummonerViewModel
 
 val viewModelModule = module {
-    factory { SummonerViewModel(get()) }
+    factory { SummonerViewModel(get(), get()) }
 }

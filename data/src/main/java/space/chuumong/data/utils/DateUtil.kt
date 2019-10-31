@@ -40,6 +40,6 @@ object DateUtil {
         }
 
         val date = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date(date * MILL_SEC))
-        return Pair(GameDateType.DATE, diffTime.toString())
+        return Pair(GameDateType.DATE, date)
     }
 }

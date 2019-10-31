@@ -6,11 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import space.chuumong.data.Result
 import space.chuumong.data.utils.MathUtils
 import space.chuumong.domain.entities.Summoner
+import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.domain.entities.SummonerProfile
 import space.chuumong.domain.usecases.GetSummonerInfo
+import space.chuumong.domain.usecases.GetSummonerMoreMatchGame
 import space.chuumong.lolstats.utils.SingleLiveEvent
 
-class SummonerViewModel(private val getSummonerInfo: GetSummonerInfo) : BaseViewModel() {
+class SummonerViewModel(
+    private val getSummonerInfo: GetSummonerInfo,
+    private val getMoreMatchGame: GetSummonerMoreMatchGame
+) : BaseViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
 
@@ -148,6 +153,14 @@ class SummonerViewModel(private val getSummonerInfo: GetSummonerInfo) : BaseView
             result.onSuccess(it)
         }, {
             _isLoading.value = false
+            result.onFail(it)
+        }))
+    }
+
+    fun getMoreMatchGame(name: String, date: Int, result: Result<List<SummonerGame>>) {
+        add(getMoreMatchGame.get(name, date).subscribe({
+            result.onSuccess(it)
+        }, {
             result.onFail(it)
         }))
     }
