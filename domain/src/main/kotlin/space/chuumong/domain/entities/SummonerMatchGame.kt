@@ -16,7 +16,7 @@ data class SummonerGame(
     val champion: SummonerGameChampion,
     val spells: List<ImageUrl>,
     val items: List<ImageUrl>,
-    val isHasWard: Boolean,
+    val hasWard: Boolean,
     val wardImageUrl: String,
     val createDate: Int,
     val gameLength: Int,
@@ -34,6 +34,10 @@ data class SummonerGameChampion(
 data class SummonerGameStats(
     val general: SummonerGameStatsGeneral
 )
+
+enum class OpScoreBadge {
+    ACE, MVP
+}
 
 data class SummonerGameStatsGeneral(
     val kills: Int,

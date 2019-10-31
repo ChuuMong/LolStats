@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_marginTop="62dp"
-                        android:background="@drawable/shape_solid_black_01_corner_10"
+                        android:background="@drawable/shape_solid_black_01_corner_12"
                         android:gravity="center"
                         android:minWidth="33dp"
                         android:paddingStart="6dp"

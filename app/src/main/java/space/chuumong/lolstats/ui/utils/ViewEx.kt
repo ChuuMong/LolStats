@@ -16,6 +16,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import space.chuumong.lolstats.R
 
@@ -46,6 +48,15 @@ fun Int.toPx(): Int {
 
 fun ImageView.loadUrl(url: String) {
     Glide.with(context).load(url).into(this)
+}
+
+fun ImageView.loadCircleImage(url: String) {
+    Glide.with(context).load(url).apply(RequestOptions().circleCrop()).into(this)
+}
+
+fun ImageView.loadRoundImage(url: String, radius: Int) {
+    Glide.with(context).load(url)
+        .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(radius))).into(this)
 }
 
 fun TextView.setKillDeathAssistAverage(kill: String, death: String, assist: String) {

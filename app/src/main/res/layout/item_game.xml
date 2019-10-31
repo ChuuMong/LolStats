@@ -2,25 +2,61 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="108dp">
+    android:layout_height="108dp"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_win_and_loss"
         android:layout_width="40dp"
         android:layout_height="0dp"
         android:background="@color/blue_01"
-        app:layout_constraintBottom_toTopOf="@id/line_01"
+        app:layout_constraintBottom_toTopOf="@id/line_02"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_win_and_loss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="29dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="승" />
+
+        <View
+            android:id="@+id/line_01"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="12dp"
+            android:background="@color/white_alpha_66"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_win_and_loss" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line_01"
+            tools:text="38:45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/line_01"
+        app:layout_constraintBottom_toTopOf="@id/line_02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cl_win_and_loss"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,6 +70,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/tv_op_score_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/shape_stroke_white_solid_purple_01_corner_8"
+            android:paddingStart="3dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/iv_champion"
+            app:layout_constraintStart_toStartOf="@id/iv_champion"
+            app:layout_constraintTop_toTopOf="@id/iv_champion"
+            tools:text="ACE" />
 
         <ImageView
             android:id="@+id/iv_first_spell"
@@ -107,7 +161,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_2nd_item"
@@ -117,7 +171,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/iv_1st_item"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_3r_item"
@@ -127,7 +181,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/iv_2nd_item"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_4th_item"
@@ -137,7 +191,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/iv_3r_item"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_5th_item"
@@ -147,7 +201,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/iv_4th_item"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_6th_item"
@@ -157,7 +211,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/iv_5th_item"
             app:layout_constraintTop_toBottomOf="@id/iv_champion"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/shape_solid_gray_01_corner_4" />
 
         <ImageView
             android:id="@+id/iv_ward"
@@ -175,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/gray_02"
+            android:textColor="@color/gray_03"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -186,7 +240,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/gray_02"
+            android:textColor="@color/gray_03"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_game_type"
@@ -198,16 +252,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/shape_stroke_red_01_1_corner_12"
+            android:paddingStart="7dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/red_01"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_game_date"
-            tools:text="뼘ㅇㄱㅁ ㅏㅑㅣㅣ" />
+            tools:text="Quadra Kill" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:id="@+id/line_01"
+        android:id="@+id/line_02"
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="@color/gray_01"

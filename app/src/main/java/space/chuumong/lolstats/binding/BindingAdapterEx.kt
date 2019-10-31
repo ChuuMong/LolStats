@@ -9,20 +9,28 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
+import space.chuumong.data.utils.empty
 import space.chuumong.domain.entities.SummonerPositionType
 import space.chuumong.lolstats.R
+import space.chuumong.lolstats.ui.utils.loadCircleImage
 import space.chuumong.lolstats.ui.utils.setKillDeathAssistAverage
 
 @BindingAdapter("loadCircleImage")
 fun setLoadCircleImage(iv: ImageView, url: String?) {
-    url ?: return
+    if (url == null) {
+        iv.setImageResource(0)
+        return
+    }
 
-    Glide.with(iv.context).load(url).apply(RequestOptions().circleCrop()).into(iv)
+    iv.loadCircleImage(url)
 }
 
 @BindingAdapter("recentGameCount")
 fun setRecentGameCount(tv: TextView, count: Int?) {
-    count ?: return
+    if (count == null) {
+        tv.text = String.empty()
+        return
+    }
 
     tv.text = String.format(
         tv.context.getString(R.string.summoner_recent_analysis_game_count_format),
@@ -32,8 +40,10 @@ fun setRecentGameCount(tv: TextView, count: Int?) {
 
 @BindingAdapter(value = ["bind:resentWinCount", "bind:resentLossCount"])
 fun setResentWinAndLoss(tv: TextView, winCount: Int?, lossCount: Int?) {
-    winCount ?: return
-    lossCount ?: return
+    if (winCount == null || lossCount == null) {
+        tv.text = String.empty()
+        return
+    }
 
     tv.text = String.format(
         tv.context.getString(R.string.summoner_resent_win_and_loss_format),
@@ -49,34 +59,44 @@ fun setKillDeathAssistAverageText(
     deathAverage: Float?,
     assistAverage: Float?
 ) {
-    killAverage ?: return
-    deathAverage ?: return
-    assistAverage ?: return
+    if (killAverage == null || deathAverage == null || assistAverage == null) {
+        tv.text = String.empty()
+        return
+    }
 
     val killAverageText = String.format("%.1f", killAverage)
     val deathAverageText = String.format("%.1f", deathAverage)
     val assistAverageText = String.format("%.1f", assistAverage)
-    
+
     tv.setKillDeathAssistAverage(killAverageText, deathAverageText, assistAverageText)
 }
 
 @BindingAdapter("kdaText")
 fun setKdaText(tv: TextView, kda: Float?) {
-    kda ?: return
+    if (kda == null) {
+        tv.text = String.empty()
+        return
+    }
 
     tv.text = String.format(tv.context.getString(R.string.kda_format), kda)
 }
 
 @BindingAdapter("resentWinRateText")
 fun setResentWinRateText(tv: TextView, winRate: Int?) {
-    winRate ?: return
+    if (winRate == null) {
+        tv.text = String.empty()
+        return
+    }
 
     tv.text = String.format(tv.context.getString(R.string.resent_win_rate), winRate)
 }
 
 @BindingAdapter("summonerPositionImage")
 fun setSummonerPositionImage(iv: ImageView, position: String?) {
-    position ?: return
+    if (position == null) {
+        iv.setImageResource(0)
+        return
+    }
 
     iv.setImageResource(
         when (position) {
@@ -92,7 +112,10 @@ fun setSummonerPositionImage(iv: ImageView, position: String?) {
 
 @BindingAdapter("winRateText")
 fun setWinRateText(tv: TextView, winRate: Int?) {
-    winRate ?: return
-
+    if (winRate == null) {
+        tv.text = String.empty()
+        return
+    }
+    
     tv.text = String.format(tv.context.getString(R.string.win_rate), winRate)
 }

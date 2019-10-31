@@ -5,11 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import space.chuumong.data.const.SUMMONER_FIVE_TO_FIVE_RANK
+import space.chuumong.data.const.SUMMONER_SOLO_RANK_TYPE
+import space.chuumong.data.utils.DateUtil
+import space.chuumong.data.utils.GameDateType
+import space.chuumong.data.utils.empty
+import space.chuumong.domain.entities.OpScoreBadge
 import space.chuumong.domain.entities.SummonerGame
 import space.chuumong.lolstats.R
-import space.chuumong.lolstats.ui.utils.loadUrl
-import space.chuumong.lolstats.ui.utils.setKillDeathAssistAverage
+import space.chuumong.lolstats.ui.utils.*
 
 class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGameViewHolder>() {
 
@@ -37,7 +45,15 @@ class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGam
     }
 
     inner class SummonerGameViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val IMAGE_RADIUS = 4
+
+        private val clWinAndLoss = view.findViewById<ConstraintLayout>(R.id.cl_win_and_loss)
+        private val tvWinAndLoss = view.findViewById<TextView>(R.id.tv_win_and_loss)
+
+        private val tvTime = view.findViewById<TextView>(R.id.tv_time)
+
         private val ivChampion = view.findViewById<ImageView>(R.id.iv_champion)
+        private val tvOpScoreBadge = view.findViewById<TextView>(R.id.tv_op_score_badge)
 
         private val ivFirstSpell = view.findViewById<ImageView>(R.id.iv_first_spell)
         private val ivSecondSpell = view.findViewById<ImageView>(R.id.iv_second_spell)
@@ -65,13 +81,36 @@ class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGam
         private val context = itemView.context
 
         fun bind(item: SummonerGame) {
-            ivChampion.loadUrl(item.champion.imageUrl)
+            if (item.isWin) {
+                clWinAndLoss.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_01))
+                tvWinAndLoss.text = context.getString(R.string.summoner_win)
+            } else {
+                clWinAndLoss.setBackgroundColor(ContextCompat.getColor(context, R.color.red_01))
+                tvWinAndLoss.text = context.getString(R.string.summoner_loss)
+            }
 
-            ivFirstSpell.loadUrl(item.spells[0].imageUrl)
-            ivSecondSpell.loadUrl(item.spells[1].imageUrl)
+            tvTime.text = DateUtil.getGameTime(item.gameLength)
 
-            ivMainRun.loadUrl(item.peak[0])
-            ivSubRun.loadUrl(item.peak[1])
+            ivChampion.loadCircleImage(item.champion.imageUrl)
+            if (item.stats.general.opScoreBadge.isNotEmpty()) {
+                tvOpScoreBadge.visibility = View.VISIBLE
+                tvOpScoreBadge.text = item.stats.general.opScoreBadge
+                tvOpScoreBadge.setBackgroundResource(
+                    when (item.stats.general.opScoreBadge) {
+                        OpScoreBadge.ACE.name -> R.drawable.shape_stroke_white_solid_purple_01_corner_8
+                        OpScoreBadge.MVP.name -> R.drawable.shape_stroke_white_solid_yellow_01_corner_8
+                        else -> R.drawable.shape_stroke_white_solid_purple_01_corner_8
+                    }
+                )
+            } else {
+                tvOpScoreBadge.visibility = View.GONE
+            }
+
+            ivFirstSpell.loadRoundImage(item.spells[0].imageUrl, IMAGE_RADIUS.toPx())
+            ivSecondSpell.loadRoundImage(item.spells[1].imageUrl, IMAGE_RADIUS.toPx())
+
+            ivMainRun.loadCircleImage(item.peak[0])
+            ivSubRun.loadCircleImage(item.peak[1])
 
             tvKillsDeathsAssists.setKillDeathAssistAverage(
                 item.stats.general.kills.toString(),
@@ -84,15 +123,42 @@ class SummonerGameAdapter : RecyclerView.Adapter<SummonerGameAdapter.SummonerGam
                 item.stats.general.killRate
             )
 
-            ivItems.forEach { it.setImageResource(0) }
-            ivWard.setImageResource(0)
+            ivItems.forEach { it.setImageResource(R.drawable.shape_solid_gray_01_corner_4) }
 
             for (i in item.items.indices) {
-                ivItems[i].loadUrl(item.items[i].imageUrl)
+                ivItems[i].loadRoundImage(item.items[i].imageUrl, IMAGE_RADIUS.toPx())
             }
 
-            if (item.isHasWard) {
-                ivWard.loadUrl(item.wardImageUrl)
+            ivWard.isVisible = item.hasWard
+            if (item.hasWard) {
+                ivWard.loadCircleImage(item.wardImageUrl)
+            }
+
+            tvGameType.text = when (item.gameType) {
+                SUMMONER_SOLO_RANK_TYPE -> context.getString(R.string.summoner_solo_rank)
+                SUMMONER_FIVE_TO_FIVE_RANK -> context.getString(R.string.summoner_five_to_five_rank)
+                else -> String.empty()
+            }
+
+            val gameDate = DateUtil.getMatchGameDate(item.createDate)
+            tvGameDate.text = when (gameDate.first) {
+                GameDateType.MIN -> String.format(
+                    context.getString(R.string.before_min_format),
+                    gameDate.second
+                )
+                GameDateType.HOUR -> String.format(
+                    context.getString(R.string.before_hour_format),
+                    gameDate.second
+                )
+                GameDateType.DATE -> gameDate.second
+                else -> String.empty()
+            }
+
+            if (item.stats.general.multiKill.isNotEmpty()) {
+                tvMultiKill.visibility = View.VISIBLE
+                tvMultiKill.text = item.stats.general.multiKill
+            } else {
+                tvMultiKill.visibility = View.GONE
             }
         }
     }

@@ -8,6 +8,9 @@
     <string name="win_rate">%d%%</string>
     <string name="resent_win_rate">(%d%%)</string>
 
+    <string name="before_min_format">%s분 전</string>
+    <string name="before_hour_format">%s시간 전</string>
+
     <string name="summoner_refresh">전적갱신</string>
 
     <string name="summoner_lp_format">%s LP</string>
@@ -18,5 +21,10 @@
     <string name="summoner_position">포지션</string>
     <string name="summoner_most_champion">모스트 승률</string>
     <string name="summoner_kill_rate">킬관여 %s</string>
+    <string name="summoner_win">승</string>
+    <string name="summoner_loss">패</string>
+
+    <string name="summoner_solo_rank">솔랭</string>
+    <string name="summoner_five_to_five_rank">자유 5:5 랭크</string>
 
 </resources>

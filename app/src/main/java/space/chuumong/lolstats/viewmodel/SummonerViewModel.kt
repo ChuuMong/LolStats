@@ -103,37 +103,45 @@ class SummonerViewModel(private val getSummonerInfo: GetSummonerInfo) : BaseView
             _summonerPositionWinRate.value =
                 MathUtils.getWinRate(summonerPosition.wins, summonerPosition.losses)
 
-            if (it.matchGame.mostChampions.size < 2) {
-                _isLoading.value = false
-                result.onFail(ArrayIndexOutOfBoundsException())
-                return@subscribe
-            }
-
             val firstMostChampion = it.matchGame.mostChampions[0]
             val firstMostChampionWinRate =
                 MathUtils.getWinRate(firstMostChampion.wins, firstMostChampion.losses)
-            val secondMostChampion = it.matchGame.mostChampions[1]
-            val secondMostChampionWinRate =
-                MathUtils.getWinRate(secondMostChampion.wins, secondMostChampion.losses)
 
             _mostFirstChampionImage.value = firstMostChampion.imageUrl
             _mostFirstChampionWinRate.value = firstMostChampionWinRate
-            _mostSecondChampionImage.value = secondMostChampion.imageUrl
+
+            val secondMostChampion = try {
+                it.matchGame.mostChampions[1]
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                null
+            }
+
+            val secondMostChampionWinRate = if (secondMostChampion != null) {
+                MathUtils.getWinRate(secondMostChampion.wins, secondMostChampion.losses)
+            } else {
+                null
+            }
+
+            _mostSecondChampionImage.value = secondMostChampion?.imageUrl
             _mostSecondChampionWinRate.value = secondMostChampionWinRate
 
-            when {
-                firstMostChampionWinRate < secondMostChampionWinRate -> {
-                    _isMostSecondChampion.value = true
-                    _isMostFirstChampion.value = false
+            if (secondMostChampionWinRate != null) {
+                when {
+                    firstMostChampionWinRate < secondMostChampionWinRate -> {
+                        _isMostSecondChampion.value = true
+                        _isMostFirstChampion.value = false
+                    }
+                    secondMostChampionWinRate < firstMostChampionWinRate -> {
+                        _isMostSecondChampion.value = false
+                        _isMostFirstChampion.value = true
+                    }
+                    else -> {
+                        _isMostSecondChampion.value = true
+                        _isMostFirstChampion.value = true
+                    }
                 }
-                secondMostChampionWinRate < firstMostChampionWinRate -> {
-                    _isMostSecondChampion.value = false
-                    _isMostFirstChampion.value = true
-                }
-                else -> {
-                    _isMostSecondChampion.value = true
-                    _isMostFirstChampion.value = true
-                }
+            } else {
+                _isMostFirstChampion.value = true
             }
 
             _isLoading.value = false

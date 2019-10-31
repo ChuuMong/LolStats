@@ -10,7 +10,7 @@ import space.chuumong.domain.entities.SummonerLeague
 import space.chuumong.lolstats.R
 import space.chuumong.lolstats.ui.utils.loadUrl
 import space.chuumong.data.utils.MathUtils
-import space.chuumong.lolstats.utils.numberFormat
+import space.chuumong.data.utils.numberFormat
 
 class SummonerLeagueAdapter :
     RecyclerView.Adapter<SummonerLeagueAdapter.SummonerLeagueViewHolder>() {

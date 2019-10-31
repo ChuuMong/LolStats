@@ -1,6 +1,7 @@
 package space.chuumong.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import space.chuumong.data.const.WARD_ID
 import space.chuumong.data.utils.MathUtils
 import space.chuumong.domain.entities.*
 
@@ -39,23 +40,20 @@ data class SummonerMatchGameResponse(
 
         var leastChampion = ""
         var leastWinRate = Int.MAX_VALUE
-        this.mostChampions.forEach {
-
-            //TODO 중복 여부 정상 처리 안됨.
-            var isAdd = true
-            if (mostChampions.find { champion -> champion.name == it.name } != null) {
-                isAdd = false
+        for (i in this.mostChampions.indices) {
+            val champion = this.mostChampions[i]
+            val findChampion = mostChampions.find { it.name == champion.name }
+            if (findChampion != null) {
+                continue
             }
 
-            val winRate = MathUtils.getWinRate(it.wins, it.losses)
+            val winRate = MathUtils.getWinRate(champion.wins, champion.losses)
             if (winRate < leastWinRate) {
-                leastChampion = it.name
+                leastChampion = champion.name
                 leastWinRate = winRate
             }
 
-            if (isAdd) {
-                mostChampions.add(it.toEntity())
-            }
+            mostChampions.add(champion.toEntity())
         }
 
         if (mostChampions.size > 2) {
@@ -106,7 +104,7 @@ data class SummonerGameResponse(
         var isHasWard = false
         var wardImageUrl = ""
         this.items.forEach {
-            if (it.imageUrl.contains("3340")) {
+            if (it.imageUrl.contains(WARD_ID)) {
                 isHasWard = true
                 wardImageUrl = it.imageUrl
                 return@forEach

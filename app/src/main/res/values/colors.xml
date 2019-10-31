@@ -5,6 +5,7 @@
     <color name="black_02">#33383c</color>
 
     <color name="white">@android:color/white</color>
+    <color name="white_alpha_66">#66ffffff</color>
 
     <color name="gray_01">#ebeef1</color>
     <color name="gray_02">#52595f</color>
@@ -13,6 +14,11 @@
 
     <color name="blue_01">#5383e8</color>
     <color name="blue_02">#1ea1f7</color>
+
     <color name="red_01">#e84057</color>
+
+    <color name="yellow_01">#ffa905</color>
+
+    <color name="purple_01">#8b68ff</color>
 
 </resources>

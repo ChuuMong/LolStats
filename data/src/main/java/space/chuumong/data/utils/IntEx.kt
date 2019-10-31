@@ -1,4 +1,4 @@
-package space.chuumong.lolstats.utils
+package space.chuumong.data.utils
 
 import java.text.NumberFormat
 
